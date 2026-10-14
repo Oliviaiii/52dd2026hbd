@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff8f2" />
+    <meta
+      name="description"
+      content="不用登入，快速輸入、批次貼上或拍照辨識刮刮卡序號。"
+    />
+    <title>大蒂宮生日慶刮刮卡｜中獎序號查詢</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script>
+      (() => {
+        const showPreviewNotice = (isFileMode) => {
+          const status = document.getElementById("event-status");
+          const galleryCount = document.getElementById("gallery-count");
+          const gallery = document.getElementById("prize-gallery");
+          const catalogSummary = document.getElementById("catalog-summary");
+          const catalog = document.getElementById("prize-catalog");
+
+          if (status) {
+            status.textContent = isFileMode ? "請使用本機預覽網址" : "本機預覽服務未啟動";
+            status.className = "status-pill status-pill--error";
+          }
+          if (galleryCount) {
+            galleryCount.textContent = isFileMode ? "無法直接從檔案載入獎項" : "無法連線到本機預覽服務";
+          }
+          if (gallery) {
+            gallery.innerHTML =
+              `<div class="gallery-empty gallery-empty--notice"><strong>${isFileMode ? "請不要直接開啟 index.html" : "請重新啟動本機預覽服務"}</strong><span>請在此資料夾執行 <code>npm start</code>，再開啟 <a href="http://127.0.0.1:4173">http://127.0.0.1:4173</a>。部署到 GitHub Pages 後也會正常載入。</span></div>`;
+          }
+          if (catalogSummary) catalogSummary.textContent = "啟動本機預覽後即可查看完整清單";
+          if (catalog) catalog.replaceChildren();
+        };
+
+        window.addEventListener("DOMContentLoaded", () => {
+          if (location.protocol === "file:") {
+            showPreviewNotice(true);
+            return;
+          }
+
+          window.setTimeout(() => {
+            if (!window.__birthdayAppReady) showPreviewNotice(false);
+          }, 8000);
+        });
+      })();
+    </script>
+    <script type="module" src="assets/js/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#checker">跳到序號查詢</a>
+
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="回到首頁">
+        <span class="brand__mark" aria-hidden="true">✦</span>
+        <span id="brand-name">大蒂宮生日慶</span>
+      </a>
+      <span class="privacy-chip">
+        <span class="privacy-chip__dot" aria-hidden="true"></span>
+        不用登入・資料留在裝置內
+      </span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero__copy">
+          <p class="eyebrow">HAPPY BIRTHDAY EVENT</p>
+          <h1 id="page-title">刮開驚喜，<br /><em>一秒對獎。</em></h1>
+          <p id="event-description" class="hero__description">
+            輸入、貼上或拍下刮刮卡序號，我們幫你一次完成比對。
+          </p>
+          <div class="hero__meta" aria-label="活動狀態">
+            <span id="event-status" class="status-pill status-pill--loading">讀取活動資料中</span>
+            <span id="updated-at" class="updated-at"></span>
+          </div>
+        </div>
+
+        <div class="event-visual">
+          <span class="event-visual__spark event-visual__spark--one" aria-hidden="true">✦</span>
+          <span class="event-visual__spark event-visual__spark--two" aria-hidden="true">✦</span>
+          <figure class="event-visual__poster">
+            <img
+              src="img/S__71237641_0.jpg"
+              alt="大蒂宮 2026 生日慶頭獎主圖"
+              fetchpriority="high"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <section class="prizes-section" aria-labelledby="prizes-title">
+        <div class="section-heading prizes-heading">
+          <div>
+            <p class="step-label">01 / PRIZES</p>
+            <h2 id="prizes-title">這次可以抽到什麼？</h2>
+          </div>
+          <p>左右滑動查看目前公布的獎項。品項與名額若有異動，仍以活動主辦單位最新公告為準。</p>
+        </div>
+        <div class="gallery-toolbar">
+          <span id="gallery-count">載入獎項中…</span>
+          <div class="gallery-arrows" aria-label="獎項圖片導覽">
+            <button id="gallery-prev" type="button" aria-label="看上一張獎項圖片">←</button>
+            <button id="gallery-next" type="button" aria-label="看下一張獎項圖片">→</button>
+          </div>
+        </div>
+        <div id="prize-gallery" class="prize-gallery" aria-live="polite"></div>
+
+        <div class="catalog-heading">
+          <div>
+            <p class="step-label">PRIZE LIST</p>
+            <h3>獎品文字清單</h3>
+            <p id="catalog-summary">整理獎品資料中…</p>
+          </div>
+          <label class="catalog-search" for="catalog-search">
+            <span aria-hidden="true">⌕</span>
+            <input id="catalog-search" type="search" placeholder="搜尋品牌或獎品名稱" autocomplete="off" />
+          </label>
+        </div>
+        <div id="prize-catalog" class="prize-catalog" aria-live="polite"></div>
+      </section>
+
+      <section id="checker" class="checker" aria-labelledby="checker-title">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">02 / CHECK</p>
+            <h2 id="checker-title">查詢你的序號</h2>
+          </div>
+          <p>可以一次輸入多組，系統會自動去除重複內容。</p>
+        </div>
+
+        <div class="checker-card">
+          <div class="tabs" role="tablist" aria-label="輸入方式">
+            <button
+              id="tab-manual"
+              class="tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-manual"
+              data-tab="manual"
+            >
+              <span aria-hidden="true">⌨</span> 輸入序號
+            </button>
+            <button
+              id="tab-photo"
+              class="tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-photo"
+              data-tab="photo"
+            >
+              <span aria-hidden="true">◎</span> 拍照辨識
+            </button>
+          </div>
+
+          <div id="panel-manual" class="tab-panel" role="tabpanel" aria-labelledby="tab-manual">
+            <label class="field-label" for="serial-input">序號</label>
+            <textarea
+              id="serial-input"
+              rows="7"
+              placeholder="每行一組，或直接貼上一整批序號&#10;例如：A1B2-C3D4"
+              spellcheck="false"
+              autocapitalize="characters"
+              autocomplete="off"
+            ></textarea>
+            <div class="input-footer">
+              <span id="input-summary">尚未輸入序號</span>
+              <label class="file-button" for="serial-file">
+                <span aria-hidden="true">↑</span> 上傳 TXT / CSV
+              </label>
+              <input id="serial-file" type="file" accept=".txt,.csv,text/plain,text/csv" hidden />
+            </div>
+          </div>
+
+          <div
+            id="panel-photo"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-photo"
+            hidden
+          >
+            <div id="photo-empty" class="photo-dropzone">
+              <div class="photo-dropzone__icon" aria-hidden="true">◎</div>
+              <h3>拍下或上傳刮刮卡</h3>
+              <p>照片只會留在這台裝置中，不會上傳到伺服器。</p>
+              <label class="button button--secondary" for="photo-input">選擇照片或開啟相機</label>
+              <input id="photo-input" type="file" accept="image/*" capture="environment" hidden />
+            </div>
+
+            <div id="photo-preview-wrap" class="photo-preview" hidden>
+              <img id="photo-preview" alt="準備辨識的刮刮卡照片" />
+              <div class="photo-preview__actions">
+                <button id="recognize-photo" class="button button--secondary" type="button">
+                  開始辨識
+                </button>
+                <button id="replace-photo" class="text-button" type="button">更換照片</button>
+              </div>
+              <div id="ocr-progress-wrap" class="ocr-progress" hidden>
+                <div class="ocr-progress__track" aria-hidden="true">
+                  <span id="ocr-progress-bar"></span>
+                </div>
+                <p id="ocr-progress-text" role="status">準備辨識引擎…</p>
+              </div>
+            </div>
+
+            <div id="ocr-review" class="ocr-review" hidden>
+              <label class="field-label" for="ocr-text">辨識結果（請先確認再查詢）</label>
+              <textarea id="ocr-text" rows="5" spellcheck="false"></textarea>
+              <p>照片反光或刮痕可能造成誤判，請務必核對卡片上的原始序號。</p>
+            </div>
+          </div>
+
+          <div id="form-message" class="form-message" role="alert" hidden></div>
+          <button id="check-button" class="button button--primary button--wide" type="button">
+            <span>開始對獎</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="results-section" class="results-section" aria-labelledby="results-title" hidden>
+        <div class="section-heading section-heading--results">
+          <div>
+            <p class="step-label">03 / RESULT</p>
+            <h2 id="results-title">查詢結果</h2>
+          </div>
+          <div id="result-summary" class="result-summary"></div>
+        </div>
+        <div id="results-list" class="results-list" aria-live="polite"></div>
+      </section>
+
+      <section class="history-section" aria-labelledby="history-title">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">04 / HISTORY</p>
+            <h2 id="history-title">這台裝置的查詢紀錄</h2>
+          </div>
+          <p>紀錄只存在目前瀏覽器；清除網站資料或更換裝置後不會保留。</p>
+        </div>
+        <div class="history-card">
+          <div id="history-empty" class="empty-state">
+            <span aria-hidden="true">✦</span>
+            <p>還沒有查詢紀錄</p>
+          </div>
+          <div id="history-content" hidden>
+            <div class="history-toolbar">
+              <span id="history-count"></span>
+              <div>
+                <button id="export-history" class="text-button" type="button">匯出 CSV</button>
+                <button id="clear-history" class="text-button text-button--danger" type="button">
+                  清除紀錄
+                </button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">序號</th>
+                    <th scope="col">結果</th>
+                    <th scope="col">查詢時間</th>
+                  </tr>
+                </thead>
+                <tbody id="history-list"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="notice-section" aria-labelledby="notice-title">
+        <p class="step-label">BEFORE YOU GO</p>
+        <h2 id="notice-title">小提醒</h2>
+        <div class="notice-grid">
+          <article>
+            <span>01</span>
+            <h3>以主辦單位公告為準</h3>
+            <p>本網站僅協助序號比對，最終得獎與領獎資格仍以正式活動公告為準。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>照片辨識後要再確認</h3>
+            <p>刮痕、反光與字體都可能影響辨識結果，送出前請再次核對每一個字元。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>我們不會收集序號</h3>
+            <p>輸入、辨識與比對都在瀏覽器內完成，不會將照片或查詢紀錄送到伺服器。</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span id="footer-name">生日刮刮卡中獎查詢</span>
+      <span class="author-links">
+        作者
+        <a href="https://github.com/Oliviaiii" target="_blank" rel="noopener noreferrer">GitHub: Oliviaiii</a>
+        <a href="https://www.threads.net/@pmenance.manager" target="_blank" rel="noopener noreferrer">Threads: pmenance.manager</a>
+      </span>
+    </footer>
+
+    <dialog id="image-dialog" class="image-dialog" aria-labelledby="image-dialog-title">
+      <div class="image-dialog__header">
+        <div>
+          <p class="step-label">PRIZE PREVIEW</p>
+          <h2 id="image-dialog-title">獎項總覽</h2>
+        </div>
+        <button id="close-image-dialog" type="button" aria-label="關閉圖片">×</button>
+      </div>
+      <div class="image-dialog__body">
+        <div id="image-dialog-crop" class="image-dialog__crop">
+          <img id="image-dialog-photo" alt="" />
+        </div>
+      </div>
+    </dialog>
+
+    <noscript>
+      <div class="noscript-message">這個查詢工具需要啟用 JavaScript 才能使用。</div>
+    </noscript>
+  </body>
+</html>

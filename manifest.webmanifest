@@ -1,0 +1,19 @@
+{
+  "name": "大蒂宮生日慶刮刮卡中獎序號查詢",
+  "short_name": "大蒂宮對獎",
+  "description": "不用登入，在瀏覽器內快速比對生日刮刮卡序號。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffaf5",
+  "theme_color": "#fff8f2",
+  "lang": "zh-Hant-TW",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

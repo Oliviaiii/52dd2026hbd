@@ -1,0 +1,19 @@
+{
+  "event": {
+    "siteName": "大蒂宮生日慶刮刮卡",
+    "brandName": "大蒂宮生日慶",
+    "description": "輸入、貼上或拍下刮刮卡序號，我們幫你一次完成比對。獎項持續追加中，一起試試手氣！"
+  },
+  "serial": {
+    "minLength": 4,
+    "maxLength": 32,
+    "allowedPattern": "^[A-Z0-9-]+$"
+  },
+  "ocr": {
+    "language": "eng",
+    "characterWhitelist": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-"
+  },
+  "storage": {
+    "maxHistoryItems": 1000
+  }
+}

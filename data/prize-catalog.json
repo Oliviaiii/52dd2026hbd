@@ -1,0 +1,335 @@
+{
+  "sourceNote": "依主辦單位 2026 生日慶獎項海報整理；品名、規格與名額以主辦單位最新公告為準。",
+  "groups": [
+    {
+      "page": 1,
+      "title": "頭獎主圖",
+      "items": [
+        { "quantity": 1, "name": "現金 31 萬" },
+        { "quantity": 3, "name": "那個仁 兜風" },
+        { "quantity": 10, "name": "健身工廠金卡 1 年" },
+        { "quantity": 3, "name": "海慶澎湖海鮮 1 桌" },
+        { "quantity": 1, "name": "虹夕諾雅谷關一晚兩人房（含餐）" },
+        { "quantity": 1, "name": "iPhone 18 Pro 256G" },
+        { "quantity": 1, "name": "iPhone Duo" }
+      ]
+    },
+    {
+      "page": 2,
+      "items": [
+        { "quantity": 1, "name": "亞洲線商務艙來回機票" },
+        { "quantity": 1, "name": "KYMCO 新 K1 特仕版 150 ABS 雙碟" },
+        { "quantity": 1, "name": "TUDOR 帝舵表 MT5652 型" },
+        { "quantity": 1, "name": "Dyson HT01 Airstrait 二合一吹風直髮器（普魯士藍）" },
+        { "quantity": 31, "name": "下顎線訂書針" }
+      ]
+    },
+    {
+      "page": 3,
+      "items": [
+        { "quantity": 1, "name": "棒棒峇里島行程兩人同行" },
+        { "quantity": 1, "name": "下廚跟蒂一起吃" },
+        { "quantity": 1, "name": "iFLYTEK AI 翻譯耳機" },
+        { "quantity": 1, "name": "iFLYTEK 翻譯機" },
+        { "quantity": 1, "name": "iFLYTEK NOTE 2 辦公本閱讀器" },
+        { "quantity": 1, "name": "dūa 客房雙人房（含 2 早餐券）" },
+        { "quantity": 1, "name": "HOTEL INDIGO 豪華精品房 1 晚" }
+      ]
+    },
+    {
+      "page": 4,
+      "items": [
+        { "quantity": 5, "name": "noku noku 保養品禮盒" },
+        { "quantity": 1, "name": "Elizabeth Arden 艾地苯系列保養組" },
+        { "quantity": 3, "name": "TYMO AIRHYPE 高速負離子吹風機" },
+        { "quantity": 10, "name": "維娜雯蒂雙人套餐" },
+        { "quantity": 1, "name": "if clothing 購物金 6,000 元" },
+        { "quantity": 1, "name": "柔地蠶商帝王雞腳" },
+        { "quantity": 1, "name": "Nike mind 001 黑色（尺寸任選）" },
+        { "quantity": 1, "name": "Nike mind 001 灰色（尺寸任選）" },
+        { "quantity": 10, "name": "HPV 疫苗一劑" },
+        { "quantity": 10, "name": "柏仁月子中心房價優惠券" },
+        { "quantity": 3, "name": "曾貓指定歌曲視訊＋預祝生日" },
+        { "quantity": 3, "name": "曾貓視訊看手相" },
+        { "quantity": 1, "name": "李定倫指定歌曲視訊跳舞" },
+        { "quantity": 1, "name": "石屎豪摩托車兜風" },
+        { "quantity": 1, "name": "神秘簽名照" }
+      ]
+    },
+    {
+      "page": 5,
+      "items": [
+        { "quantity": 20, "name": "RABBIT FOOT 石墨烯美腿襪" },
+        { "quantity": 10, "name": "腳底按摩券" },
+        { "quantity": 10, "name": "全身指壓券" },
+        { "quantity": 1, "name": "豪華露營帳篷（四人／平日）" },
+        { "quantity": 1, "name": "雙人房（平日，款式一）" },
+        { "quantity": 1, "name": "雙人房（平日，款式二）" },
+        { "quantity": 1, "name": "四人房（平日）" },
+        { "quantity": 1, "name": "雙人房（平日，款式三）" },
+        { "quantity": 5, "name": "花茶綜合禮盒" },
+        { "quantity": 5, "name": "足浴湯包兩盒（隨機）" },
+        { "quantity": 5, "name": "沁系列套組（沁涼＋沁舒＋沁樂）" },
+        { "quantity": 5, "name": "燉湯 5 入組（隨機）" },
+        { "quantity": 3, "name": "滴雞精 12 入禮盒" },
+        { "quantity": 5, "name": "龜苓膏 6 入禮盒" },
+        { "quantity": 20, "name": "鹼性水 600ml×24 入" }
+      ]
+    },
+    {
+      "page": 6,
+      "items": [
+        { "quantity": 2, "name": "BALMUDA The Pot 經典手沖壺（顏色隨機）" },
+        { "quantity": 20, "name": "韓式泡菜／黃金泡菜各一罐" },
+        { "quantity": 6, "name": "浪跡天涯後背包" },
+        { "quantity": 1, "name": "BEAST mini PLUS 小野獸破壁機（隨機出貨）" },
+        { "quantity": 5, "name": "mosh! 圈圈吸管杯 700ml（黑色）" },
+        { "quantity": 5, "name": "MOODO 舒芙蕾抗菌 2:55 乾髮帽（顏色隨機）" },
+        { "quantity": 7, "name": "dayday HYDRATE＋REPAIR 保濕修護面膜" },
+        { "quantity": 7, "name": "dayday BRIGHTEN＋GLOW 煥白透亮面膜" },
+        { "quantity": 5, "name": "Dr.Douxi 轉轉靚顏洗臉機" },
+        { "quantity": 10, "name": "Dr.Douxi 山茶花滋潤柔光棒" },
+        { "quantity": 10, "name": "Dr.Douxi 潤唇修護油豆沙色" },
+        { "quantity": 10, "name": "Dr.Douxi 5G 燕窩酸膠原粉（15 入／盒）" },
+        { "quantity": 10, "name": "雙人套餐" },
+        { "quantity": 50, "name": "炸牛排（100g）套餐" },
+        { "quantity": 3, "name": "肉燥飯免費吃一個月（一夫一炊）" }
+      ]
+    },
+    {
+      "page": 7,
+      "items": [
+        { "quantity": 3, "name": "免費兌換一個月任選主食餐盒（每日一個）" },
+        { "quantity": 20, "name": "酸菜快樂豬" },
+        { "quantity": 30, "name": "餛飩組＋特製辣椒醬＋富貴麵" },
+        { "quantity": 5, "name": "麵包綜合口頌×2" },
+        { "quantity": 5, "name": "麵包綜合乳酪×2" },
+        { "quantity": 5, "name": "麵包綜合捲捲×2" },
+        { "quantity": 10, "name": "FRESHO2 呵護妹妹潔淨慕斯 130ml－玫瑰" },
+        { "quantity": 10, "name": "FRESHO2 呵護妹妹潔淨慕斯 130ml－檸檬馬鞭草" },
+        { "quantity": 10, "name": "FRESHO2 油頭救星乾洗髮噴霧 70ml－白柚山茶花" },
+        { "quantity": 10, "name": "FRESHO2 油頭救星乾洗髮噴霧 70ml－紅茶" },
+        { "quantity": 10, "name": "FRESHO2 油頭救星乾洗髮噴霧 70ml－青檸玫瑰" },
+        { "quantity": 3, "name": "FRESHO2 PDRN 積雪草光潤噴霧 100ml" },
+        { "quantity": 3, "name": "FRESHO2 PDRN 積雪草修護精華 30ml" },
+        { "quantity": 3, "name": "FRESHO2 PDRN 積雪草舒潤乳霜 50ml" },
+        { "quantity": 10, "name": "FRESHO2 PDRN 積雪草養護面膜 25ml" }
+      ]
+    },
+    {
+      "page": 8,
+      "items": [
+        { "quantity": 3, "name": "FRESHO2 PDRN 後生元養膚防曬 50ml" },
+        { "quantity": 30, "name": "萊卡親膚小褲（顏色隨機）" },
+        { "quantity": 3, "name": "平口內衣（顏色隨機）" },
+        { "quantity": 3, "name": "L 型鋼圈內衣（顏色隨機）" },
+        { "quantity": 30, "name": "Free cut 無痕褲（顏色隨機）" },
+        { "quantity": 3, "name": "LYLYL WAVE 洗臉機（顏色隨機）" },
+        { "quantity": 6, "name": "Kinlays Alavaque Nerpa Cap（顏色隨機）" },
+        { "quantity": 3, "name": "TYMO AIRFLOW 全能直捲造型器" },
+        { "quantity": 4, "name": "Juuneeduu 狗狗睡衣（顏色隨機）" },
+        { "quantity": 5, "name": "MOZTECH 磁吸摺疊手機支架" },
+        { "quantity": 2, "name": "金好箱折疊收納手推車（小款）" },
+        { "quantity": 2, "name": "KIMOCHI 寵物負離子除毛梳" },
+        { "quantity": 2, "name": "BOBA 滾滾奶茶逗貓器" },
+        { "quantity": 20, "name": "三合一多功能滅蚊小夜燈" },
+        { "quantity": 20, "name": "電蚊拍" }
+      ]
+    },
+    {
+      "page": 9,
+      "items": [
+        { "quantity": 20, "name": "鹽燈（款式隨機）" },
+        { "quantity": 10, "name": "嵐 mini 體香膏" },
+        { "quantity": 5, "name": "嵐洗髮精＋液態皂" },
+        { "quantity": 100, "name": "收納吉壓縮袋（M）" },
+        { "quantity": 5, "name": "THOMSON 體脂機" },
+        { "quantity": 5, "name": "氣泡飲（12 瓶入）" },
+        { "quantity": 10, "name": "頭等艙綜合米果" },
+        { "quantity": 5, "name": "ONE CHILLA 脆貢菜" },
+        { "quantity": 10, "name": "ONE CHILLA 生鮮辣椒醬" },
+        { "quantity": 10, "name": "ONE CHILLA 乾鍋脆菇" },
+        { "quantity": 15, "name": "鹽酥脆條四季豆×2＋鹽酥脆片小黃瓜×2" },
+        { "quantity": 10, "name": "小圓餅一盒（口味隨機）" },
+        { "quantity": 5, "name": "Anini Doc Green 隨行果汁機" },
+        { "quantity": 5, "name": "Anini Burga 保溫杯（顏色隨機）" },
+        { "quantity": 5, "name": "720 鳳梨酵素 1 盒（共 15 包）" }
+      ]
+    },
+    {
+      "page": 10,
+      "items": [
+        { "quantity": 3, "name": "Velvet Strap Pro 手機充電掛繩晶線 15mm" },
+        { "quantity": 8, "name": "綠量綠拿鐵一盒" },
+        { "quantity": 6, "name": "Crocs 化妝包（顏色隨機）" },
+        { "quantity": 5, "name": "積木旅行分裝瓶 M 三件組（顏色隨機）" },
+        { "quantity": 5, "name": "獨立筒枕頭" },
+        { "quantity": 5, "name": "紫檀木印章一顆＋印泥" },
+        { "quantity": 5, "name": "五效合一洗衣片" },
+        { "quantity": 10, "name": "nicenynook BELLA 腰帶肩背包－土黃棕" },
+        { "quantity": 3, "name": "陶的幫手擀真手感刮痧板" },
+        { "quantity": 10, "name": "優若美痘痘貼林三益禮盒組" },
+        { "quantity": 10, "name": "海鮮禮盒（依當季海鮮搭配）" },
+        { "quantity": 5, "name": "Vitamin Di 輕涼修身防曬外套" },
+        { "quantity": 5, "name": "彈性修身歐美款 Detox 防曬外套" },
+        { "quantity": 20, "name": "Vitamin Di 電腦包" },
+        { "quantity": 25, "name": "66dreams.co 大銀二代梳一入" }
+      ]
+    },
+    {
+      "page": 11,
+      "items": [
+        { "quantity": 25, "name": "66dreams.co 旅行二代梳一入" },
+        { "quantity": 20, "name": "SH-RD 蛋白質護髮霜 10ml" },
+        { "quantity": 5, "name": "SH-RD 24K 金箔蛋白質護髮霜 80ml" },
+        { "quantity": 5, "name": "SH-RD 蛋白質旅行組（含過夜包）" },
+        { "quantity": 2, "name": "SH-RD 咖啡因蘊髮禮盒" },
+        { "quantity": 5, "name": "番茄烏龍麵＋麻奶鍋湯底" },
+        { "quantity": 5, "name": "oralclean 電動牙刷消光黑＋雙線牙線棒" },
+        { "quantity": 3, "name": "HARU DESIRE ULTIMATE HOT 大麻熱慾焚身高潮液" },
+        { "quantity": 3, "name": "HARU INDULGE 大麻煙醯胺熱感煥白潤滑液" },
+        { "quantity": 3, "name": "HARU STEAMY 卡瓦醉椒熱感潤滑液" },
+        { "quantity": 2, "name": "The DoDo Men 徽章（閃電）" },
+        { "quantity": 2, "name": "The DoDo Men 徽章（Logo）" },
+        { "quantity": 5, "name": "BE YOU 兩用厚磅帆布袋" },
+        { "quantity": 10, "name": "蘿蔔糕×1＋魚子燒賣×1" },
+        { "quantity": 1, "name": "經典款液體衛生棉 27cm 16片×12" }
+      ]
+    },
+    {
+      "page": 12,
+      "items": [
+        { "quantity": 50, "name": "乖乖生技 純淨益生菌（原味）30條／盒" },
+        { "quantity": 50, "name": "乖乖生技 蔓越莓 GABA 益生菌 30條／盒" },
+        { "quantity": 60, "name": "chillbo 飲料券" },
+        { "quantity": 10, "name": "HYGGE Plume 極薄冰絲超無痕內褲（S–2XL）" },
+        { "quantity": 10, "name": "HYGGE 品牌皮革量尺（隨機色）" },
+        { "quantity": 5, "name": "HYGGE 品牌吸引力法則帆布肩背袋" },
+        { "quantity": 20, "name": "養生鍋物產品各一包（品項依海報）" },
+        { "quantity": 20, "name": "MOBO S1014 優惠券" },
+        { "quantity": 4, "name": "MOBO ALL IN 迷你燈箱吊飾" },
+        { "quantity": 5, "name": "MOBO ALL IN 籌碼鑰匙圈" },
+        { "quantity": 10, "name": "Cura 滑滑｜毛球控制咀嚼營養錠" },
+        { "quantity": 10, "name": "Cura 亮亮｜高濃度頂級魚油" },
+        { "quantity": 10, "name": "Cura 壯壯｜呼吸機能保養膠囊" },
+        { "quantity": 10, "name": "Cura 光能淨貓咪用瞬效去味除菌噴霧" },
+        { "quantity": 10, "name": "Cura 光能淨狗狗用瞬間去味噴劑" }
+      ]
+    },
+    {
+      "page": 13,
+      "items": [
+        { "quantity": 10, "name": "Cura CHARM 野性魅力紐西蘭超能主食罐（狗狗系列）" },
+        { "quantity": 10, "name": "Cura 日本共立製藥 DENTALBIOR 益適" },
+        { "quantity": 10, "name": "Cura MediSuppli 犬用／貓用保健多多（不挑款）" },
+        { "quantity": 10, "name": "LATIB 橄欖油檸檬飲 1盒／14入" },
+        { "quantity": 10, "name": "LATIB 生薑檸檬飲 1盒／14入" },
+        { "quantity": 5, "name": "水餃 3盒（口味隨機）" },
+        { "quantity": 10, "name": "襪子 1雙（款式隨機）" },
+        { "quantity": 10, "name": "無線蓬鬆電梳 OSTR-001 WH" },
+        { "quantity": 3, "name": "HOTEL INDIGO 餐飲抵用券 $2,000" },
+        { "quantity": 10, "name": "蘿蔔糕組 各300g" },
+        { "quantity": 10, "name": "不沾鍋（導磁不沾鍋）" },
+        { "quantity": 10, "name": "牛牛組" },
+        { "quantity": 10, "name": "豬豬組" },
+        { "quantity": 10, "name": "綜合湯品組" },
+        { "quantity": 200, "name": "魚樂薯條×1＋魚樂櫻花蝦餅×1" }
+      ]
+    },
+    {
+      "page": 14,
+      "items": [
+        { "quantity": 10, "name": "新品香包三入一組" },
+        { "quantity": 20, "name": "La Vinée 香氛儀式組" },
+        { "quantity": 10, "name": "悅香棲 MOMO 包兌換券" },
+        { "quantity": 10, "name": "悅香棲 迴廊包兌換券" },
+        { "quantity": 10, "name": "悅香棲 Gina×麻將涼糕兌換券" },
+        { "quantity": 3, "name": "悅品雞湯（全雞）兌換券" },
+        { "quantity": 100, "name": "綠拿鐵" },
+        { "quantity": 100, "name": "莓樂蒂益生菌" },
+        { "quantity": 30, "name": "Stay Fox 內褲（三件一組，款式一）" },
+        { "quantity": 30, "name": "Stay Fox 蕾絲內褲（三件一組）" },
+        { "quantity": 20, "name": "VOVA 純棉舒適拋拋褲 1袋" },
+        { "quantity": 20, "name": "VOVA 冰絲無痕拋拋褲 1袋" },
+        { "quantity": 20, "name": "noku noku 益生元私密潔淨露保濕／涼感呵護 2入" },
+        { "quantity": 20, "name": "noku noku 蘋果清潔液＋瓶器清潔液 2入一組" },
+        { "quantity": 20, "name": "noku noku 寶寶酵素洗衣精＋柔軟精 2入一組" }
+      ]
+    },
+    {
+      "page": 15,
+      "items": [
+        { "quantity": 20, "name": "noku noku 草本精油保濕乾洗手＋植物配方防蚊液組合" },
+        { "quantity": 10, "name": "Paula's Choice 水楊酸保養組" },
+        { "quantity": 10, "name": "Paula's Choice 高效胜肽眼霜＋潤唇精華" },
+        { "quantity": 10, "name": "Nosoon 龍乾淨消毒噴霧 6罐" },
+        { "quantity": 20, "name": "Nosoon 瑜伽褲" },
+        { "quantity": 10, "name": "雙齡膠原蛋白益生菌版 500g（口味隨機）" },
+        { "quantity": 10, "name": "雙齡膠原蛋白隨身盒 1盒30入（口味隨機）" },
+        { "quantity": 15, "name": "Durex 茵緹瑪蔓越莓私密潔淨露 200ml" },
+        { "quantity": 15, "name": "杜蕾斯 001 Super-Card 造型悠遊卡" },
+        { "quantity": 3, "name": "AIRITY 磁吸自拍螢幕" },
+        { "quantity": 10, "name": "門票" },
+        { "quantity": 5, "name": "球卡 $1,000" },
+        { "quantity": 5, "name": "法芙娜濃醇生巧小花酥" },
+        { "quantity": 10, "name": "馬達加斯加香草迷你頌" },
+        { "quantity": 10, "name": "八小時潤澤護唇膏 3.7g＋黃金肌因修護膠囊 7顆" }
+      ]
+    },
+    {
+      "page": 16,
+      "items": [
+        { "quantity": 50, "name": "美臀褲中腰" },
+        { "quantity": 20, "name": "美臀褲高腰" },
+        { "quantity": 3, "name": "atojet 旅行組" },
+        { "quantity": 1, "name": "ARTISAN 0.6L 雙電壓快煮壺" },
+        { "quantity": 1, "name": "ARTISAN USB 縫隙電動清潔刷－潔淨白" },
+        { "quantity": 10, "name": "mor. basic 短版 Bratop" },
+        { "quantity": 10, "name": "mor. basic 收肩 Bratop" },
+        { "quantity": 10, "name": "mor. 織品香氛噴霧" },
+        { "quantity": 5, "name": "深棕豹紋半身裙" },
+        { "quantity": 5, "name": "$1,000 元折價券" },
+        { "quantity": 5, "name": "炸你全家餐 1份＋別多士娃娃 1支" },
+        { "quantity": 1, "name": "Sealf 激瘦爆乳三件套組（摩卡咖）" },
+        { "quantity": 1, "name": "Sealf 激瘦爆乳三件套組（質感黑）" },
+        { "quantity": 1, "name": "Sealf 激瘦爆乳三件套組（純白）" },
+        { "quantity": 1, "name": "Sealf 復古點點三件套組" }
+      ]
+    },
+    {
+      "page": 17,
+      "items": [
+        { "quantity": 1, "name": "Sealf 復古點點引爆兩件組" },
+        { "quantity": 1, "name": "Sealf 激瘦曲線罩衫裙" },
+        { "quantity": 1, "name": "Sealf 激瘦曲線背心裙" },
+        { "quantity": 30, "name": "新品炭火柚香厚片肉乾" },
+        { "quantity": 30, "name": "PW 蛋白禮包" },
+        { "quantity": 25, "name": "NIOU AMAZE 面膜組＋雪絨花頭皮水" },
+        { "quantity": 25, "name": "NIOU AMAZE 面膜組＋95%精華 150ml" },
+        { "quantity": 1, "name": "POD 2 磁吸腳架" },
+        { "quantity": 3, "name": "FIBHER 來財抽繩帆布包" },
+        { "quantity": 4, "name": "FIBHER 澎澎化妝包" },
+        { "quantity": 3, "name": "FIBHER 運動毛巾" },
+        { "quantity": 10, "name": "FIBHER 絨毛卡套附扣環、吊飾" },
+        { "quantity": 10, "name": "ZHENEK 護手霜" },
+        { "quantity": 10, "name": "脆餅禮盒" },
+        { "quantity": 20, "name": "L. ERICKSON 彈力髮圈 8入（粗版，顏色隨機）" }
+      ]
+    },
+    {
+      "page": 18,
+      "items": [
+        { "quantity": 5, "name": "Logitech 後背包" },
+        { "quantity": 10, "name": "Logitech 冰霸杯" },
+        { "quantity": 10, "name": "全都順利箱" },
+        { "quantity": 5, "name": "MOFT 快拆手機掛繩（顏色隨機）" },
+        { "quantity": 10, "name": "BIODERMA 舒敏高效潔膚液 250ml" },
+        { "quantity": 10, "name": "LalaLife 巧可奶昔旅行組 3入（口味隨機）" },
+        { "quantity": 5, "name": "月老香辣鍋（粉款）350g／盒" },
+        { "quantity": 20, "name": "富金生活免洗貼貼褲" },
+        { "quantity": 50, "name": "派對侍者滋補液 3包" },
+        { "quantity": 10, "name": "Tri-Aid 三角按摩器" }
+      ]
+    }
+  ]
+}
