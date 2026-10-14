@@ -8,6 +8,7 @@ import {
   mergeHistory,
   normalizeSerial,
   parseSerials,
+  removeHistoryCode,
   validateSerial,
 } from "../assets/js/core.js";
 
@@ -62,6 +63,15 @@ test("mergeHistory moves rechecked codes to the front without duplicates", () =>
     next.map((entry) => entry.code),
     ["AB12", "NEW2", "OLD1"],
   );
+});
+
+test("removeHistoryCode removes only the selected serial", () => {
+  const history = [
+    { code: "AB12", checkedAt: "2026-01-01T00:00:00.000Z" },
+    { code: "CD34", checkedAt: "2026-01-02T00:00:00.000Z" },
+  ];
+  const next = removeHistoryCode(history, "ab12");
+  assert.deepEqual(next, [{ code: "CD34", checkedAt: "2026-01-02T00:00:00.000Z" }]);
 });
 
 test("historyToCsv escapes commas and quotes", () => {

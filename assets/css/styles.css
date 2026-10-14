@@ -1065,6 +1065,27 @@ textarea:focus {
   color: var(--danger);
 }
 
+.history-delete-button {
+  min-width: 44px;
+  min-height: 36px;
+  padding: 6px 10px;
+  color: var(--danger);
+  background: transparent;
+  border: 1px solid rgba(177, 75, 66, 0.28);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.history-delete-button:hover,
+.history-delete-button:focus-visible {
+  color: #fff;
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -1358,6 +1379,11 @@ footer {
   th:nth-child(3),
   td:nth-child(3) {
     display: none;
+  }
+
+  th,
+  td {
+    padding-inline: 8px;
   }
 }
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = "birthday-scratch-checker-v5";
+const CACHE_NAME = "birthday-scratch-checker-v6";
 const APP_SHELL = [
   "./",
   "./index.html",

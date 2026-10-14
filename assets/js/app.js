@@ -4,6 +4,7 @@ import {
   historyToCsv,
   mergeHistory,
   parseSerials,
+  removeHistoryCode,
 } from "./core.js";
 
 const STORAGE_KEY = "birthday-scratch-checker-history-v1";
@@ -101,7 +102,6 @@ function collectElements() {
     "panel-manual",
     "panel-photo",
     "serial-input",
-    "serial-file",
     "input-summary",
     "photo-empty",
     "photo-input",
@@ -136,7 +136,6 @@ function collectElements() {
 function bindEvents() {
   elements.tabs.forEach((tab) => tab.addEventListener("click", () => switchTab(tab.dataset.tab)));
   elements.serialInput.addEventListener("input", updateInputSummary);
-  elements.serialFile.addEventListener("change", importSerialFile);
   elements.photoInput.addEventListener("change", selectPhoto);
   elements.replacePhoto.addEventListener("click", () => elements.photoInput.click());
   elements.recognizePhoto.addEventListener("click", recognizePhoto);
@@ -318,24 +317,6 @@ function updateInputSummary() {
 
   const invalidText = parsed.invalid.length ? `，${parsed.invalid.length} 組格式待確認` : "";
   elements.inputSummary.textContent = `偵測到 ${parsed.valid.length} 組有效序號${invalidText}`;
-}
-
-async function importSerialFile(event) {
-  const [file] = event.target.files;
-  if (!file) return;
-
-  try {
-    const content = await file.text();
-    const current = elements.serialInput.value.trim();
-    elements.serialInput.value = current ? `${current}\n${content}` : content;
-    updateInputSummary();
-    elements.serialInput.focus();
-    hideMessage();
-  } catch {
-    showMessage("檔案讀取失敗，請確認檔案是 UTF-8 編碼的 TXT 或 CSV。");
-  } finally {
-    event.target.value = "";
-  }
 }
 
 function selectPhoto(event) {
@@ -538,7 +519,15 @@ function renderHistory() {
     statusCell.append(status);
     const timeCell = document.createElement("td");
     timeCell.textContent = formatDate(entry.checkedAt, true);
-    row.append(codeCell, statusCell, timeCell);
+    const actionCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "history-delete-button";
+    deleteButton.type = "button";
+    deleteButton.textContent = "刪除";
+    deleteButton.setAttribute("aria-label", `刪除序號 ${entry.code}`);
+    deleteButton.addEventListener("click", () => deleteHistoryCode(entry.code));
+    actionCell.append(deleteButton);
+    row.append(codeCell, statusCell, timeCell, actionCell);
     elements.historyList.append(row);
   }
 }
@@ -565,6 +554,12 @@ function clearHistory() {
   if (!window.confirm("確定要清除這台裝置上的所有查詢紀錄嗎？")) return;
   state.history = [];
   localStorage.removeItem(STORAGE_KEY);
+  renderHistory();
+}
+
+function deleteHistoryCode(code) {
+  state.history = removeHistoryCode(state.history, code);
+  saveHistory();
   renderHistory();
 }
 

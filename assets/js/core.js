@@ -124,6 +124,12 @@ export function mergeHistory(existingHistory, codes, checkedAt, maxItems = 1000)
   return [...nextEntries, ...oldEntries].slice(0, maxItems);
 }
 
+export function removeHistoryCode(existingHistory, codeToRemove) {
+  const normalizedCode = normalizeSerial(codeToRemove);
+  if (!Array.isArray(existingHistory) || !normalizedCode) return [];
+  return existingHistory.filter((entry) => normalizeSerial(entry?.code) !== normalizedCode);
+}
+
 export function historyToCsv(history, resultForCode) {
   const escapeCell = (value) => `"${String(value ?? "").replaceAll('"', '""')}"`;
   const rows = [["序號", "查詢結果", "查詢時間"]];
