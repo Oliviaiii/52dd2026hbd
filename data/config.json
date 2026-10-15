@@ -4,13 +4,13 @@
     "brandName": "大蒂宮生日慶",
     "description": "輸入、貼上或拍下刮刮卡序號，我們幫你一次完成比對。獎項持續追加中，一起試試手氣！",
     "officialSource": {
-      "label": "活動主辦單位公開內容整理",
-      "url": ""
+      "label": "查看公開唯讀獎項與開獎序號",
+      "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGZqOWZL8xRrAJ1z_B6a6DBfq36lezzabFn96ENix6wWabynEwmjo1rxWwEEDjPUnfhPsmpou1FALa/pubhtml"
     }
   },
   "winnerSource": {
     "type": "google-sheets-csv",
-    "url": "",
+    "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGZqOWZL8xRrAJ1z_B6a6DBfq36lezzabFn96ENix6wWabynEwmjo1rxWwEEDjPUnfhPsmpou1FALa/pub?gid=1997897847&single=true&output=csv",
     "refreshSeconds": 60
   },
   "serial": {

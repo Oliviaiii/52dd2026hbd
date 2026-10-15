@@ -236,7 +236,7 @@ function updateWinnerSyncStatus() {
   } else if (state.prizeSource.type === "google-sheets") {
     elements.winnerSyncStatus.textContent = announced
       ? `Google Sheet 中獎名單已同步${updatedText}`
-      : "Google Sheet 已連線，中獎名單尚未公布";
+      : "Google Sheet 已同步；目前為 draft，改成 announced 後才會開放對獎";
   } else {
     elements.winnerSyncStatus.textContent = announced
       ? `網站中獎名單已更新${updatedText}`
