@@ -8,6 +8,32 @@
       name="description"
       content="不用登入，快速輸入、批次貼上或拍照辨識刮刮卡序號。"
     />
+    <link rel="canonical" href="https://oliviaiii.github.io/52dd2026hbd/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:site_name" content="大蒂宮生日慶刮刮卡" />
+    <meta property="og:title" content="大蒂宮生日慶刮刮卡｜中獎序號查詢" />
+    <meta
+      property="og:description"
+      content="不用登入，輸入、批次貼上或拍照辨識刮刮卡序號，一次快速對獎。"
+    />
+    <meta property="og:url" content="https://oliviaiii.github.io/52dd2026hbd/" />
+    <meta
+      property="og:image"
+      content="https://oliviaiii.github.io/52dd2026hbd/img/S__71237641_0.jpg"
+    />
+    <meta property="og:image:alt" content="大蒂宮 2026 生日慶獎項主圖" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="大蒂宮生日慶刮刮卡｜中獎序號查詢" />
+    <meta
+      name="twitter:description"
+      content="不用登入，輸入、批次貼上或拍照辨識刮刮卡序號，一次快速對獎。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://oliviaiii.github.io/52dd2026hbd/img/S__71237641_0.jpg"
+    />
+    <meta name="twitter:image:alt" content="大蒂宮 2026 生日慶獎項主圖" />
     <title>大蒂宮生日慶刮刮卡｜中獎序號查詢</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="manifest.webmanifest" />
@@ -77,6 +103,12 @@
             <span id="event-status" class="status-pill status-pill--loading">讀取活動資料中</span>
             <span id="updated-at" class="updated-at"></span>
           </div>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#checker">
+              立即對獎 <span aria-hidden="true">→</span>
+            </a>
+            <a class="hero__text-link" href="#prizes-title">先看完整獎品</a>
+          </div>
         </div>
 
         <div class="event-visual">
@@ -117,10 +149,27 @@
           </div>
           <label class="catalog-search" for="catalog-search">
             <span aria-hidden="true">⌕</span>
-            <input id="catalog-search" type="search" placeholder="搜尋品牌或獎品名稱" autocomplete="off" />
+            <span class="visually-hidden">搜尋獎品</span>
+            <input
+              id="catalog-search"
+              type="search"
+              placeholder="搜尋品牌或獎品名稱"
+              aria-label="搜尋獎品"
+              autocomplete="off"
+            />
           </label>
         </div>
         <div id="prize-catalog" class="prize-catalog" aria-live="polite"></div>
+        <button
+          id="catalog-toggle"
+          class="button catalog-toggle"
+          type="button"
+          aria-controls="prize-catalog"
+          aria-expanded="false"
+          hidden
+        >
+          展開完整清單
+        </button>
       </section>
 
       <section id="checker" class="checker" aria-labelledby="checker-title">
@@ -132,6 +181,15 @@
           <p>可以一次輸入多組，系統會自動去除重複內容。</p>
         </div>
 
+        <div class="source-note" role="note" aria-label="資料來源與更新狀態">
+          <span class="source-note__badge">非官方查詢工具</span>
+          <span id="official-source">資料來源：活動主辦單位公開內容整理</span>
+          <span id="winner-sync-status" role="status">中獎名單尚未公布</span>
+          <button id="refresh-prizes" class="text-button" type="button" hidden>
+            更新中獎名單
+          </button>
+        </div>
+
         <div class="checker-card">
           <div class="tabs" role="tablist" aria-label="輸入方式">
             <button
@@ -141,6 +199,7 @@
               role="tab"
               aria-selected="true"
               aria-controls="panel-manual"
+              tabindex="0"
               data-tab="manual"
             >
               <span aria-hidden="true">⌨</span> 輸入序號
@@ -152,6 +211,7 @@
               role="tab"
               aria-selected="false"
               aria-controls="panel-photo"
+              tabindex="-1"
               data-tab="photo"
             >
               <span aria-hidden="true">◎</span> 拍照辨識
@@ -169,7 +229,7 @@
               autocomplete="off"
             ></textarea>
             <div class="input-footer">
-              <span id="input-summary">尚未輸入序號</span>
+              <span id="input-summary" aria-live="polite">尚未輸入序號</span>
             </div>
           </div>
 

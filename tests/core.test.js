@@ -8,7 +8,9 @@ import {
   mergeHistory,
   normalizeSerial,
   parseSerials,
+  parseWinnerSheetCsv,
   removeHistoryCode,
+  validatePrizeData,
   validateSerial,
 } from "../assets/js/core.js";
 
@@ -80,4 +82,41 @@ test("historyToCsv escapes commas and quotes", () => {
     () => ({ label: '中獎："生日,禮物"' }),
   );
   assert.match(csv, /"中獎：""生日,禮物"""/);
+});
+
+test("parseWinnerSheetCsv groups serials by prize and reads publish state", () => {
+  const csv = [
+    "狀態,更新時間,獎項,序號,備註",
+    'announced,2026-10-20T12:00:00+08:00,"頭獎,特別版",AB12,第一批',
+    ",,,CD34,第一批",
+    ",,二獎,EF56,",
+  ].join("\n");
+  const result = parseWinnerSheetCsv(csv, serialConfig);
+  assert.equal(result.status, "announced");
+  assert.deepEqual(result.prizes, [
+    { name: "頭獎,特別版", note: "第一批", codes: ["AB12", "CD34"] },
+    { name: "二獎", note: "", codes: ["EF56"] },
+  ]);
+});
+
+test("validatePrizeData blocks duplicate codes and incomplete announced data", () => {
+  assert.throws(
+    () =>
+      validatePrizeData(
+        {
+          status: "announced",
+          updatedAt: "2026-10-20T12:00:00+08:00",
+          prizes: [
+            { name: "頭獎", codes: ["AB12"] },
+            { name: "二獎", codes: ["ab12"] },
+          ],
+        },
+        serialConfig,
+      ),
+    /同時出現/,
+  );
+  assert.throws(
+    () => validatePrizeData({ status: "announced", updatedAt: null, prizes: [] }, serialConfig),
+    /空白中獎名單/,
+  );
 });

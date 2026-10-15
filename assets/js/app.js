@@ -4,7 +4,9 @@ import {
   historyToCsv,
   mergeHistory,
   parseSerials,
+  parseWinnerSheetCsv,
   removeHistoryCode,
+  validatePrizeData,
 } from "./core.js";
 
 const STORAGE_KEY = "birthday-scratch-checker-history-v1";
@@ -16,8 +18,12 @@ const state = {
   prizeIndex: new Map(),
   galleryData: { items: [] },
   catalogData: { groups: [] },
+  prizeSource: { type: "local", error: null },
   history: [],
   activeTab: "manual",
+  catalogExpanded: false,
+  lastCheckedCodes: [],
+  refreshTimer: null,
   photoFile: null,
   photoUrl: null,
 };
@@ -32,19 +38,18 @@ async function initialize() {
   state.history = loadHistory();
 
   try {
-    const [configResponse, prizeResponse, galleryResponse, catalogResponse] = await Promise.all([
-      fetch("data/config.json", { cache: "no-cache" }),
-      fetch("data/prizes.json", { cache: "no-cache" }),
+    const configResponse = await fetch("data/config.json", { cache: "no-cache" });
+    if (!configResponse.ok) throw new Error("無法讀取活動設定");
+    state.config = await configResponse.json();
+
+    const [prizeResult, galleryResponse, catalogResponse] = await Promise.all([
+      loadPrizeData(state.config),
       fetch("data/gallery.json", { cache: "no-cache" }),
       fetch("data/prize-catalog.json", { cache: "no-cache" }),
     ]);
 
-    if (!configResponse.ok || !prizeResponse.ok) {
-      throw new Error("無法讀取活動設定");
-    }
-
-    state.config = await configResponse.json();
-    state.prizeData = await prizeResponse.json();
+    state.prizeData = prizeResult.data;
+    state.prizeSource = { type: prizeResult.type, error: prizeResult.error ?? null };
     state.galleryData = galleryResponse.ok ? await galleryResponse.json() : { items: [] };
     state.catalogData = catalogResponse.ok ? await catalogResponse.json() : { groups: [] };
     state.prizeIndex = buildPrizeIndex(state.prizeData.prizes);
@@ -53,6 +58,7 @@ async function initialize() {
     renderCatalog();
     renderHistory();
     updateInputSummary();
+    configurePrizeRefresh();
     window.__birthdayAppReady = true;
   } catch (error) {
     console.error(error);
@@ -67,6 +73,28 @@ async function initialize() {
     navigator.serviceWorker.register("service-worker.js").catch((error) => {
       console.warn("Service worker registration failed:", error);
     });
+  }
+}
+
+async function loadPrizeData(config) {
+  const localResponse = await fetch("data/prizes.json", { cache: "no-cache" });
+  if (!localResponse.ok) throw new Error("無法讀取網站備份中獎名單");
+  const localData = await localResponse.json();
+  validatePrizeData(localData, config.serial);
+
+  const sheetUrl = String(config.winnerSource?.url ?? "").trim();
+  if (!sheetUrl) return { data: localData, type: "local" };
+
+  try {
+    const url = new URL(sheetUrl, window.location.href);
+    url.searchParams.set("_updated", String(Date.now()));
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Google Sheet 回應 ${response.status}`);
+    const data = parseWinnerSheetCsv(await response.text(), config.serial);
+    return { data, type: "google-sheets" };
+  } catch (error) {
+    console.info("Google Sheet winner source unavailable; using local fallback.", error);
+    return { data: localData, type: "fallback", error };
   }
 }
 
@@ -94,6 +122,10 @@ function collectElements() {
     "catalog-summary",
     "catalog-search",
     "prize-catalog",
+    "catalog-toggle",
+    "official-source",
+    "winner-sync-status",
+    "refresh-prizes",
     "image-dialog",
     "image-dialog-title",
     "image-dialog-crop",
@@ -134,7 +166,10 @@ function collectElements() {
 }
 
 function bindEvents() {
-  elements.tabs.forEach((tab) => tab.addEventListener("click", () => switchTab(tab.dataset.tab)));
+  elements.tabs.forEach((tab) => {
+    tab.addEventListener("click", () => switchTab(tab.dataset.tab));
+    tab.addEventListener("keydown", handleTabKeydown);
+  });
   elements.serialInput.addEventListener("input", updateInputSummary);
   elements.photoInput.addEventListener("change", selectPhoto);
   elements.replacePhoto.addEventListener("click", () => elements.photoInput.click());
@@ -147,6 +182,8 @@ function bindEvents() {
   elements.closeImageDialog.addEventListener("click", () => elements.imageDialog.close());
   elements.imageDialog.addEventListener("click", closeDialogFromBackdrop);
   elements.catalogSearch.addEventListener("input", () => renderCatalog(elements.catalogSearch.value));
+  elements.catalogToggle.addEventListener("click", toggleCatalog);
+  elements.refreshPrizes.addEventListener("click", () => refreshPrizeData());
 }
 
 function applyEventContent() {
@@ -158,6 +195,8 @@ function applyEventContent() {
   elements.eventDescription.textContent =
     event.description || "輸入、貼上或拍下刮刮卡序號，我們幫你一次完成比對。";
 
+  renderOfficialSource(event.officialSource);
+
   const announced = state.prizeData.status === "announced";
   setEventStatus(announced ? "中獎名單已公布" : "等待中獎名單公布", announced ? "ready" : "pending");
 
@@ -165,6 +204,78 @@ function applyEventContent() {
     elements.updatedAt.textContent = `名單更新：${formatDate(state.prizeData.updatedAt)}`;
   } else {
     elements.updatedAt.textContent = "";
+  }
+  updateWinnerSyncStatus();
+}
+
+function renderOfficialSource(source = {}) {
+  const label = source.label || "活動主辦單位公開內容整理";
+  elements.officialSource.replaceChildren(document.createTextNode("資料來源："));
+  if (source.url) {
+    const link = document.createElement("a");
+    link.href = source.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = label;
+    elements.officialSource.append(link);
+  } else {
+    elements.officialSource.append(document.createTextNode(label));
+  }
+}
+
+function updateWinnerSyncStatus() {
+  const sheetConfigured = Boolean(String(state.config?.winnerSource?.url ?? "").trim());
+  const announced = state.prizeData?.status === "announced";
+  const updatedText = state.prizeData?.updatedAt
+    ? `，更新於 ${formatDate(state.prizeData.updatedAt, true)}`
+    : "";
+
+  elements.refreshPrizes.hidden = !sheetConfigured;
+  if (state.prizeSource.type === "fallback") {
+    elements.winnerSyncStatus.textContent = "Google Sheet 暫時無法更新，現正使用網站備份名單";
+  } else if (state.prizeSource.type === "google-sheets") {
+    elements.winnerSyncStatus.textContent = announced
+      ? `Google Sheet 中獎名單已同步${updatedText}`
+      : "Google Sheet 已連線，中獎名單尚未公布";
+  } else {
+    elements.winnerSyncStatus.textContent = announced
+      ? `網站中獎名單已更新${updatedText}`
+      : "中獎名單尚未公布";
+  }
+}
+
+function configurePrizeRefresh() {
+  const sheetConfigured = Boolean(String(state.config?.winnerSource?.url ?? "").trim());
+  if (!sheetConfigured) return;
+  const refreshSeconds = Math.max(30, Number(state.config.winnerSource.refreshSeconds) || 60);
+  window.clearInterval(state.refreshTimer);
+  state.refreshTimer = window.setInterval(() => {
+    if (document.visibilityState === "visible") refreshPrizeData({ silent: true });
+  }, refreshSeconds * 1000);
+}
+
+async function refreshPrizeData({ silent = false } = {}) {
+  if (!state.config || elements.refreshPrizes.disabled) return;
+  elements.refreshPrizes.disabled = true;
+  if (!silent) elements.refreshPrizes.textContent = "更新中…";
+
+  try {
+    const prizeResult = await loadPrizeData(state.config);
+    state.prizeData = prizeResult.data;
+    state.prizeSource = { type: prizeResult.type, error: prizeResult.error ?? null };
+    state.prizeIndex = buildPrizeIndex(state.prizeData.prizes);
+    applyEventContent();
+    renderHistory();
+    if (state.lastCheckedCodes.length) {
+      renderResults(state.lastCheckedCodes.map(resultForCode));
+    }
+  } catch (error) {
+    console.error(error);
+    state.prizeSource = { type: "fallback", error };
+    updateWinnerSyncStatus();
+  } finally {
+    elements.refreshPrizes.disabled = false;
+    elements.refreshPrizes.textContent = "更新中獎名單";
   }
 }
 
@@ -256,6 +367,7 @@ function applyImageCrop(container, image, crop) {
 }
 
 function renderCatalog(query = "") {
+  const previewCount = 20;
   const groups = Array.isArray(state.catalogData.groups) ? state.catalogData.groups : [];
   const normalizedQuery = query.trim().toLocaleLowerCase("zh-Hant-TW");
   const allItems = groups.flatMap((group) =>
@@ -265,11 +377,18 @@ function renderCatalog(query = "") {
     ? allItems.filter((item) => item.name.toLocaleLowerCase("zh-Hant-TW").includes(normalizedQuery))
     : allItems;
   const totalQuantity = matchedItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+  const shouldLimit = !normalizedQuery && !state.catalogExpanded && matchedItems.length > previewCount;
+  const visibleItems = shouldLimit ? matchedItems.slice(0, previewCount) : matchedItems;
 
   elements.catalogSummary.textContent = normalizedQuery
     ? `找到 ${matchedItems.length} 款、合計 ${totalQuantity.toLocaleString("zh-TW")} 個名額`
-    : `目前整理 ${allItems.length} 款、合計 ${totalQuantity.toLocaleString("zh-TW")} 個名額`;
+    : `目前整理 ${allItems.length} 款、合計 ${totalQuantity.toLocaleString("zh-TW")} 個名額${shouldLimit ? `・先顯示 ${previewCount} 款` : ""}`;
   elements.prizeCatalog.replaceChildren();
+  elements.catalogToggle.hidden = Boolean(normalizedQuery) || matchedItems.length <= previewCount;
+  elements.catalogToggle.setAttribute("aria-expanded", String(state.catalogExpanded));
+  elements.catalogToggle.textContent = state.catalogExpanded
+    ? "收合獎品清單"
+    : `展開完整清單（${matchedItems.length} 款）`;
 
   if (!matchedItems.length) {
     const empty = document.createElement("p");
@@ -281,7 +400,7 @@ function renderCatalog(query = "") {
 
   const list = document.createElement("ul");
   list.className = "catalog-list";
-  for (const item of matchedItems) {
+  for (const item of visibleItems) {
     const listItem = document.createElement("li");
     const badge = document.createElement("span");
     badge.className = "catalog-quantity";
@@ -294,7 +413,15 @@ function renderCatalog(query = "") {
   elements.prizeCatalog.append(list);
 }
 
-function switchTab(tabName) {
+function toggleCatalog() {
+  state.catalogExpanded = !state.catalogExpanded;
+  renderCatalog(elements.catalogSearch.value);
+  if (!state.catalogExpanded) {
+    elements.catalogSummary.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+function switchTab(tabName, focusTab = false) {
   state.activeTab = tabName;
   const isManual = tabName === "manual";
   elements.panelManual.hidden = !isManual;
@@ -303,8 +430,22 @@ function switchTab(tabName) {
     const active = tab.dataset.tab === tabName;
     tab.classList.toggle("is-active", active);
     tab.setAttribute("aria-selected", String(active));
+    tab.tabIndex = active ? 0 : -1;
+    if (active && focusTab) tab.focus();
   });
   hideMessage();
+}
+
+function handleTabKeydown(event) {
+  const currentIndex = elements.tabs.indexOf(event.currentTarget);
+  let nextIndex = currentIndex;
+  if (["ArrowRight", "ArrowDown"].includes(event.key)) nextIndex = (currentIndex + 1) % elements.tabs.length;
+  if (["ArrowLeft", "ArrowUp"].includes(event.key)) nextIndex = (currentIndex - 1 + elements.tabs.length) % elements.tabs.length;
+  if (event.key === "Home") nextIndex = 0;
+  if (event.key === "End") nextIndex = elements.tabs.length - 1;
+  if (nextIndex === currentIndex) return;
+  event.preventDefault();
+  switchTab(elements.tabs[nextIndex].dataset.tab, true);
 }
 
 function updateInputSummary() {
@@ -427,6 +568,7 @@ function checkCurrentInput() {
   }
 
   hideMessage();
+  state.lastCheckedCodes = parsed.valid;
   const results = parsed.valid.map(resultForCode);
   renderResults(results);
 

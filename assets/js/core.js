@@ -83,6 +83,143 @@ export function buildPrizeIndex(prizes = []) {
   return index;
 }
 
+export function validatePrizeData(prizeData, serialConfig = DEFAULT_SERIAL_CONFIG) {
+  const status = prizeData?.status;
+  if (!['announced', 'not_announced'].includes(status)) {
+    throw new Error('中獎名單狀態必須是 announced 或 not_announced。');
+  }
+
+  const prizes = prizeData?.prizes;
+  if (!Array.isArray(prizes)) {
+    throw new Error('中獎名單 prizes 必須是陣列。');
+  }
+
+  if (status === 'announced') {
+    if (!prizes.length) throw new Error('已公布狀態不能使用空白中獎名單。');
+    if (!prizeData.updatedAt || Number.isNaN(new Date(prizeData.updatedAt).getTime())) {
+      throw new Error('已公布狀態必須提供有效的 updatedAt。');
+    }
+  }
+
+  const seen = new Map();
+  for (const [prizeIndex, prize] of prizes.entries()) {
+    const name = String(prize?.name ?? '').trim();
+    if (!name) throw new Error(`第 ${prizeIndex + 1} 個獎項缺少名稱。`);
+    if (!Array.isArray(prize.codes) || !prize.codes.length) {
+      throw new Error(`獎項「${name}」沒有任何序號。`);
+    }
+
+    for (const rawCode of prize.codes) {
+      const result = validateSerial(rawCode, serialConfig);
+      if (!result.valid) throw new Error(`獎項「${name}」的序號「${rawCode}」格式不符。`);
+      if (seen.has(result.code)) {
+        throw new Error(`序號「${result.code}」同時出現在「${seen.get(result.code)}」與「${name}」。`);
+      }
+      seen.set(result.code, name);
+    }
+  }
+
+  return true;
+}
+
+export function parseWinnerSheetCsv(csvText, serialConfig = DEFAULT_SERIAL_CONFIG) {
+  const rows = parseCsvRows(csvText);
+  if (!rows.length) throw new Error('Google Sheet 沒有欄位標題。');
+
+  const headers = rows[0].map(normalizeSheetHeader);
+  const column = (aliases) => headers.findIndex((header) => aliases.includes(header));
+  const serialColumn = column(['序號', 'serial', 'code']);
+  const prizeColumn = column(['獎項', '獎品', 'prize', 'prizename']);
+  const noteColumn = column(['備註', 'note']);
+  const statusColumn = column(['狀態', 'status']);
+  const updatedAtColumn = column(['更新時間', 'updatedat', 'updated']);
+
+  if (serialColumn < 0 || prizeColumn < 0) {
+    throw new Error('Google Sheet 必須包含「序號」與「獎項」欄位。');
+  }
+
+  const dataRows = rows.slice(1);
+  const firstValue = (columnIndex) => {
+    if (columnIndex < 0) return '';
+    return dataRows.map((row) => String(row[columnIndex] ?? '').trim()).find(Boolean) ?? '';
+  };
+  const status = normalizeSheetStatus(firstValue(statusColumn));
+  const updatedAt = firstValue(updatedAtColumn) || null;
+  const prizeGroups = new Map();
+  let previousPrizeName = '';
+
+  dataRows.forEach((row, index) => {
+    const rawCode = String(row[serialColumn] ?? '').trim();
+    if (!rawCode) return;
+    const rowPrizeName = String(row[prizeColumn] ?? '').trim();
+    if (rowPrizeName) previousPrizeName = rowPrizeName;
+    const prizeName = rowPrizeName || previousPrizeName;
+    if (!prizeName) throw new Error(`Google Sheet 第 ${index + 2} 列缺少獎項名稱。`);
+    const note = noteColumn >= 0 ? String(row[noteColumn] ?? '').trim() : '';
+    const key = `${prizeName}\u0000${note}`;
+    if (!prizeGroups.has(key)) prizeGroups.set(key, { name: prizeName, note, codes: [] });
+    prizeGroups.get(key).codes.push(rawCode);
+  });
+
+  const prizeData = { status, updatedAt, prizes: [...prizeGroups.values()] };
+  validatePrizeData(prizeData, serialConfig);
+  return prizeData;
+}
+
+function parseCsvRows(csvText) {
+  const text = String(csvText ?? '').replace(/^\uFEFF/u, '');
+  const rows = [];
+  let row = [];
+  let value = '';
+  let quoted = false;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (character === '"') {
+      if (quoted && text[index + 1] === '"') {
+        value += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (character === ',' && !quoted) {
+      row.push(value);
+      value = '';
+    } else if ((character === '\n' || character === '\r') && !quoted) {
+      if (character === '\r' && text[index + 1] === '\n') index += 1;
+      row.push(value);
+      if (row.some((cell) => String(cell).trim())) rows.push(row);
+      row = [];
+      value = '';
+    } else {
+      value += character;
+    }
+  }
+
+  if (quoted) throw new Error('Google Sheet CSV 含有未閉合的引號。');
+  row.push(value);
+  if (row.some((cell) => String(cell).trim())) rows.push(row);
+  return rows;
+}
+
+function normalizeSheetHeader(value) {
+  return String(value ?? '')
+    .trim()
+    .toLocaleLowerCase('zh-Hant-TW')
+    .replace(/[\s_-]+/gu, '');
+}
+
+function normalizeSheetStatus(value) {
+  const normalized = String(value ?? '').trim().toLocaleLowerCase('zh-Hant-TW');
+  if (['announced', 'published', 'true', '1', '已公布', '公布'].includes(normalized)) {
+    return 'announced';
+  }
+  if (!normalized || ['draft', 'notannounced', 'false', '0', '未公布', '草稿'].includes(normalized)) {
+    return 'not_announced';
+  }
+  throw new Error(`無法識別 Google Sheet 狀態「${value}」。`);
+}
+
 export function checkSerial(code, prizeData, prizeIndex = buildPrizeIndex(prizeData?.prizes)) {
   const normalizedCode = normalizeSerial(code);
   if (prizeData?.status !== "announced") {
