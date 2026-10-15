@@ -330,6 +330,12 @@
         { "quantity": 50, "name": "派對侍者滋補液 3包" },
         { "quantity": 10, "name": "Tri-Aid 三角按摩器" }
       ]
+    },
+    {
+      "title": "活動加碼",
+      "items": [
+        { "quantity": 150, "name": "現金一萬" }
+      ]
     }
   ]
 }
