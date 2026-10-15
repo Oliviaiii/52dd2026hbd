@@ -99,6 +99,15 @@ test("parseWinnerSheetCsv groups serials by prize and reads publish state", () =
   ]);
 });
 
+test("parseWinnerSheetCsv accepts the 開獎序號 column used by the managed sheet", () => {
+  const csv = [
+    "狀態,更新時間,獎項,開獎序號,備註",
+    "announced,2026-10-20T12:00:00+08:00,現金 31 萬,AB12,",
+  ].join("\n");
+  const result = parseWinnerSheetCsv(csv, serialConfig);
+  assert.deepEqual(result.prizes, [{ name: "現金 31 萬", note: "", codes: ["AB12"] }]);
+});
+
 test("validatePrizeData blocks duplicate codes and incomplete announced data", () => {
   assert.throws(
     () =>

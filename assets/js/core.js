@@ -128,14 +128,14 @@ export function parseWinnerSheetCsv(csvText, serialConfig = DEFAULT_SERIAL_CONFI
 
   const headers = rows[0].map(normalizeSheetHeader);
   const column = (aliases) => headers.findIndex((header) => aliases.includes(header));
-  const serialColumn = column(['序號', 'serial', 'code']);
+  const serialColumn = column(['序號', '開獎序號', '中獎序號', 'serial', 'code']);
   const prizeColumn = column(['獎項', '獎品', 'prize', 'prizename']);
   const noteColumn = column(['備註', 'note']);
   const statusColumn = column(['狀態', 'status']);
   const updatedAtColumn = column(['更新時間', 'updatedat', 'updated']);
 
   if (serialColumn < 0 || prizeColumn < 0) {
-    throw new Error('Google Sheet 必須包含「序號」與「獎項」欄位。');
+    throw new Error('Google Sheet 必須包含「開獎序號」與「獎項」欄位。');
   }
 
   const dataRows = rows.slice(1);
