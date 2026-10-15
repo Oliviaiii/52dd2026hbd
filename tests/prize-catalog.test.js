@@ -27,6 +27,24 @@ test("prize catalog has valid names and quantities", () => {
     items.find((item) => item.name === "現金一萬"),
     { quantity: 150, name: "現金一萬" },
   );
+  assert.deepEqual(
+    items.filter((item) =>
+      [
+        "亞洲線商務艙來回機票 (朵璽)",
+        "榛榛峇里島行程兩人同行",
+        "石展豪摩托車兜風",
+        "不老松腳底指壓券",
+        "不老松全身指壓券",
+      ].includes(item.name),
+    ),
+    [
+      { quantity: 1, name: "亞洲線商務艙來回機票 (朵璽)" },
+      { quantity: 1, name: "榛榛峇里島行程兩人同行" },
+      { quantity: 1, name: "石展豪摩托車兜風" },
+      { quantity: 10, name: "不老松腳底指壓券" },
+      { quantity: 10, name: "不老松全身指壓券" },
+    ],
+  );
   items.forEach((item) => {
     assert.ok(item.name?.trim());
     assert.ok(Number.isInteger(item.quantity) && item.quantity > 0, item.name);
