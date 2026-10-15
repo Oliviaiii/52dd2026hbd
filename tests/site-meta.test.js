@@ -18,3 +18,12 @@ test("primary controls expose accessible labels and relationships", () => {
   assert.match(html, /id="catalog-toggle"[\s\S]*aria-controls="prize-catalog"/u);
   assert.match(html, /id="input-summary" aria-live="polite"/u);
 });
+
+test("footer service promotion links to the complete Threads contact URL", () => {
+  assert.match(html, /id="service-promo-title">搶購要搶商品，不該搶救網站。/u);
+  assert.match(html, /購物網站不怕人多，只怕沒人來。/u);
+  assert.match(
+    html,
+    /class="service-promo__cta"[\s\S]*?href="https:\/\/www\.threads\.com\/@pmenance\.manager\?igshid=NTc4MTIwNjQ2YQ=="/u,
+  );
+});
